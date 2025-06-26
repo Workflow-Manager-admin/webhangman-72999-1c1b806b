@@ -1,0 +1,4 @@
+{
+    "command": "npm install && npx tsc --noEmit && npm test -- --ci",
+    "working_directory": "/home/kavia/workspace/code-generation/webhangman-72999-1c1b806b/hangman_frontend_workspace/hangman_frontend"
+}

@@ -1,0 +1,445 @@
+/* CSS Variables for Theme Management */
+:root {
+  /* Light theme colors and accent palette for Hangman */
+  --bg-primary: #fff;
+  --bg-secondary: #f8f9fa;
+  --text-primary: #24292f;
+  --text-secondary: #757575;
+  --border-color: #e9ecef;
+  --hangman-primary: #1a73e8;
+  --hangman-accent: #43b581;
+  --hangman-secondary: #e37400;
+  --button-bg: #1a73e8;
+  --button-text: #fff;
+}
+
+/* For dark theme: only for completeness, not used. */
+[data-theme="dark"] {
+  --bg-primary: #191c1f;
+  --bg-secondary: #232629;
+  --text-primary: #e3e6e8;
+  --text-secondary: #a5a5a5;
+  --border-color: #2b2e32;
+  --hangman-primary: #1a73e8;
+  --hangman-accent: #43b581;
+  --hangman-secondary: #e37400;
+  --button-bg: #232629;
+  --button-text: #fff;
+}
+
+body, .App {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: 'Inter', ui-sans-serif, system-ui, Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  transition: background .3s, color .3s;
+}
+
+.hangman-app {
+  min-height: 100vh;
+}
+
+.hangman-container {
+  max-width: 425px;
+  margin: 0 auto;
+  margin-top: 34px;
+  margin-bottom: 40px;
+  background: var(--bg-secondary);
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(60,80,120,0.08), 0 1.5px 6px 0px #edeff1;
+  padding: 36px 25px 26px 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.hangman-illustration {
+  padding-top: 10px;
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+.hangman-secretword {
+  font-size: 2.1rem;
+  font-family: 'Fira Mono', monospace;
+  margin-bottom: 4px;
+  letter-spacing: 2.6px;
+  font-weight: 600;
+  user-select: none;
+  display: flex;
+  justify-content: center;
+}
+
+/* Letters and underscores for secret word */
+.hangman-letter {
+  display: inline-block;
+  min-width: 32px;
+  min-height: 44px;
+  border-bottom: 3px solid #e7eff3;
+  margin: 0 3.5px;
+  padding-bottom: 1px;
+  color: transparent;
+  background: none;
+  text-align: center;
+  font-size: 2.05rem;
+  font-family: inherit;
+  box-sizing: border-box;
+  transition: color .18s;
+  font-weight: 600;
+}
+.hangman-letter.revealed {
+  color: var(--hangman-accent);
+  border-bottom: 3px solid var(--hangman-accent);
+  background: none;
+}
+
+.hangman-space {
+  display: inline-block;
+  width: 20px;
+  min-height: 40px;
+}
+
+/* Keyboard styles */
+.hangman-keyboard-group {
+  margin: 15px 0 2px 0;
+  width: 100%;
+}
+.hangman-keyboard-row {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  margin: 4px 0;
+}
+.hangman-key {
+  margin: 0 3.5px;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 1.14rem;
+  padding: 0.7em 0.68em;
+  border-radius: 9px;
+  background: #fff;
+  color: var(--hangman-primary);
+  outline: none;
+  border: 1.8px solid var(--border-color);
+  cursor: pointer;
+  box-shadow: 0 1.5px 6px rgba(100,140,170,0.05);
+  transition: background 0.14s, color 0.16s, border 0.16s, transform 0.08s;
+}
+.hangman-key:active {
+  background: var(--hangman-accent);
+  color: #fff;
+  border: 1.8px solid var(--hangman-accent);
+  transform: translateY(1.6px) scale(0.99);
+}
+.hangman-key[disabled] {
+  background: #f0f2f3 !important;
+  color: #a4a9af !important;
+  border-color: #e0e0e0 !important;
+  cursor: not-allowed;
+}
+
+/* Animate correct key */
+.hangman-key-anim-correct {
+  animation: anim-correct 180ms cubic-bezier(.22,1.1,.83,1.15) 1;
+  background: var(--hangman-accent) !important;
+  color: #fff !important;
+}
+@keyframes anim-correct {
+  from { background: #fff; color: var(--hangman-accent);}
+  to { background: var(--hangman-accent); color: #fff;}
+}
+/* Animate wrong key */
+.hangman-key-anim-wrong {
+  animation: anim-wrong 180ms cubic-bezier(.1,1.33,.24,1.18) 1;
+  background: #ffe6db !important;
+  color: var(--hangman-secondary) !important;
+  border-color: var(--hangman-secondary) !important;
+}
+@keyframes anim-wrong {
+  from { background: #fff; color: var(--hangman-secondary);}
+  to { background: #ffe6db; color: var(--hangman-secondary);}
+}
+.hangman-key-used {
+  background: #f0f2f3 !important;
+  color: #bbb !important;
+  border-color: #e0e0e0 !important;
+  cursor: not-allowed;
+}
+
+/* Input styles */
+.hangman-inputbox {
+  display: flex;
+  width: 100%;
+  margin: 16px 0 4px 0;
+  justify-content: center;
+}
+.hangman-inputbox form {
+  display: flex;
+  width: 100%;
+  max-width: 385px;
+}
+.hangman-input {
+  padding: 0.7em 1em;
+  border-radius: 9px;
+  border: 1.9px solid var(--border-color);
+  background: #fff;
+  color: var(--text-primary);
+  font-size: 1.11rem;
+  flex: 1;
+  margin-right: 8px;
+  outline: none;
+  font-family: inherit;
+  box-shadow: 0 0.5px 3px rgba(120,120,120,0.06);
+  transition: border .13s;
+}
+.hangman-input:focus {
+  border: 2px solid var(--hangman-primary);
+  background: #fafdff;
+}
+.hangman-btn {
+  padding: 0.7em 1.3em;
+  border-radius: 9px;
+  border: none;
+  font-size: 1.05rem;
+  font-family: inherit;
+  font-weight: 700;
+  background: var(--hangman-accent);
+  color: #fff;
+  cursor: pointer;
+  transition: background .16s, color .16s;
+  margin-left: 4px;
+}
+.hangman-btn-main {
+  background: var(--hangman-accent);
+  color: #fff;
+}
+.hangman-btn-restart {
+  background: var(--hangman-primary);
+  color: #fff;
+  margin-top: 18px;
+}
+.hangman-btn:disabled, .hangman-btn-main:disabled {
+  background: #eee !important;
+  color: #b0b7bc !important;
+  cursor: not-allowed;
+}
+
+/* Game over/success overlay styles */
+.hangman-gameover {
+  margin-top: 16px;
+  width: 100%;
+  background: #fff5e2;
+  border-radius: 12px;
+  padding: 17px 12px 13px 12px;
+  box-shadow: 0 1.5px 8px rgba(120,100,60,0.04);
+  text-align: center;
+  animation: fade-grow-in .39s cubic-bezier(.44,.98,.45,1.05) 1;
+}
+@keyframes fade-grow-in {
+  from { opacity:0; transform: scale(.95);}
+  to { opacity:1; transform:scale(1);}
+}
+
+.hangman-gameover-message {
+  font-size: 1.31rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+.hangman-gameover-answer {
+  margin: 13px 0 0 0;
+  font-size: 1.09rem;
+  color: var(--hangman-secondary);
+  font-weight: 500;
+}
+
+/* Status row - lives and wrong guesses */
+.hangman-status-row {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 12px;
+  margin-top: 8px;
+}
+
+/* Lives indicator (pips) */
+.hangman-lives {
+  display: flex;
+  align-items: center;
+}
+.hangman-life-dot {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-left: 2px;
+  margin-right: 2px;
+  border-radius: 50%;
+  background: var(--hangman-accent);
+  border: 1.5px solid var(--border-color);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  transition: background 0.15s;
+}
+
+/* Wrong guesses chip-style display */
+.hangman-guesses {
+  display: flex;
+  align-items: center;
+  min-height: 26px;
+  flex-wrap: wrap;
+}
+.hangman-guesses-placeholder {
+  color: var(--text-secondary);
+  font-style: italic;
+  font-size: 0.97em;
+}
+.hangman-guess-label {
+  display: inline-block;
+  margin: 0 2.5px;
+  padding: 2.5px 10px;
+  border-radius: 8px;
+  background: #e5e8ea;
+  color: var(--hangman-secondary);
+  font-weight: 600;
+  font-size: 1em;
+  border: 1px solid #e0e0e0;
+  letter-spacing: 0.04em;
+  user-select: none;
+}
+
+.hangman-footer {
+  margin-top: 30px;
+  color: var(--text-secondary);
+  font-size: 0.94rem;
+  width: 100%;
+  text-align: center;
+  letter-spacing: 0.02em;
+}
+.hangman-footer a {
+  color: var(--hangman-primary);
+  text-decoration: underline;
+  transition: color .14s;
+}
+.hangman-footer a:hover { color: var(--hangman-accent); }
+
+/* Responsive design for mobile */
+@media (max-width: 540px) {
+  .hangman-container {
+    max-width: 98vw;
+    padding: 13vw 4vw 7vw 4vw;
+  }
+  .hangman-secretword { font-size: 1.2rem; }
+  .hangman-word .hangman-letter,
+  .hangman-letter {
+    min-width: 21px;
+    min-height: 30px;
+    font-size: 1.05rem;
+  }
+  .hangman-keyboard-row .hangman-key,
+  .hangman-key {
+    font-size: 1.05rem;
+    padding: 0.6em 0.62em;
+  }
+  .hangman-inputbox,
+  .hangman-inputbox form {
+    max-width: 97vw;
+  }
+}
+
+/* The rest (theme button, logo, etc.) can be ignored or hidden for the game view */
+.App-logo, .theme-toggle, .App-header, .App-link, .App-header p, .App-header code { display: none !important; }
+
+[data-theme="dark"] {
+  /* Dark theme colors */
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #282c34;
+  --text-primary: #ffffff;
+  --text-secondary: #61dafb;
+  --border-color: #404040;
+  --button-bg: #0056b3;
+  --button-text: #ffffff;
+}
+
+.App {
+  text-align: center;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: var(--bg-secondary);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease;
+  position: relative;
+}
+
+.App-link {
+  color: var(--text-secondary);
+  transition: color 0.3s ease;
+}
+
+.theme-toggle {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.theme-toggle:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  opacity: 0.9;
+}
+
+.theme-toggle:active {
+  transform: translateY(0);
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive design for mobile */
+@media (max-width: 768px) {
+  .theme-toggle {
+    top: 10px;
+    right: 10px;
+    padding: 8px 16px;
+    font-size: 12px;
+  }
+}
